@@ -5,7 +5,7 @@ import httpx
 
 
 BASE_URL = "http://localhost:8001"
-API_KEY = "fm-agent-key-secure-123"
+API_KEY = "LqVu1OS7Z_NISZAchb2bJuYQYG7kAqblchALbrowNMY"  # FUNCTIONALMIND_CLIENT_KEY
 
 
 @pytest.mark.asyncio

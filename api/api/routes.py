@@ -13,7 +13,7 @@ async def evidence_search(request: SearchRequest):
     """
     Search evidence from regulatory, clinical, and policy sources.
     
-    Primary endpoint for FM Agent to retrieve structured evidence on demand.
+    Primary endpoint for retrieving structured evidence on demand.
     
     This endpoint performs:
     1. Intent extraction for query optimization

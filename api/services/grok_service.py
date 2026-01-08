@@ -1,7 +1,7 @@
-"""Grok service for tool-calling workflows (FM Agent compatibility).
+"""Grok service for tool-calling workflows.
 
-This service exists for backward compatibility with FM Agent's expectations.
-It provides Grok-specific tool calling functionality.
+This service provides Grok-specific tool calling functionality for clients.
+Note: Most clients should handle tool calling on their side for better control.
 """
 
 from typing import AsyncGenerator
@@ -43,8 +43,8 @@ class GrokService:
         """
         Stream Grok responses with automatic tool calling.
 
-        This is a placeholder for FM Agent compatibility.
-        The actual tool calling should be done in FM Agent.
+        Note: This endpoint is provided for convenience but most clients
+        should handle tool calling on their side for better control.
 
         Args:
             request: Grok tool call request
@@ -55,10 +55,10 @@ class GrokService:
         if not self._client:
             raise RuntimeError("Grok client not initialized - LLM_API_KEY required")
 
-        # For now, just yield a message that this should be done in FM Agent
+        # Placeholder implementation
         yield GrokToolCallResponse(
             chunk_type="text",
-            content="Tool calling should be handled by FM Agent, not BH Service.",
+            content="Tool calling should be handled client-side for better control.",
         )
         yield GrokToolCallResponse(
             chunk_type="done",

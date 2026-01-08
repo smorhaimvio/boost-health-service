@@ -33,12 +33,62 @@ cp .env.example .env
 # Edit .env with your credentials
 ```
 
-Required environment variables:
-- `API_KEYS`: Comma-separated list of valid API keys for authentication
-- `XAI_API_KEY`: XAI/Grok API key
+#### Multi-Client Configuration
+
+BH Service supports multiple clients, each with their own:
+- API key for authentication
+- Qdrant instance URL
+- Qdrant API key
+- Collection name
+
+Each client is configured with a prefix (e.g., `FUNCTIONALMIND_`, `AMEDEX_`):
+
+```bash
+# Client configuration pattern
+<CLIENT_NAME>_API_KEY=client_api_key
+<CLIENT_NAME>_QDRANT_URL=https://client-qdrant.cloud.qdrant.io:6333
+<CLIENT_NAME>_QDRANT_APIKEY=client_qdrant_api_key
+<CLIENT_NAME>_QDRANT_COLLECTION=client_collection_name
+```
+
+Configured clients:
+- FUNCTIONALMIND - FunctionalMind platform (Active)
+- AMEDEX - Amedex healthcare system (Placeholder)
+- OLELIFE - OleLife wellness platform (Placeholder)
+- TIMELESS_BIOTECH - Timeless Biotech research (Placeholder)
+- MYHEALTH_RK - MyHealth RK clinical system (Placeholder)
+
+#### Adding a New Client
+
+1. Generate secure API key: `python3 -c "import secrets; print(secrets.token_urlsafe(32))"`
+2. Add configuration to `.env`:
+   ```bash
+   NEWCLIENT_API_KEY=generated_key_here
+   NEWCLIENT_QDRANT_URL=https://newclient-qdrant.cloud.qdrant.io:6333
+   NEWCLIENT_QDRANT_APIKEY=newclient_qdrant_key
+   NEWCLIENT_QDRANT_COLLECTION=newclient_collection
+   ```
+3. Add API key to `API_KEYS` list
+4. Restart service
+
+#### Testing Client Access
+
+```bash
+curl -X POST http://localhost:8001/evidence/search \
+  -H "Authorization: Bearer <CLIENT_API_KEY>" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "vitamin c", "limit": 5}'
+```
+
+#### Legacy Configuration
+
+For backward compatibility, the service also supports a single shared configuration:
+- `API_KEYS`: Comma-separated list of valid API keys
 - `QDRANT_URL`: Qdrant cloud URL
 - `QDRANT_APIKEY`: Qdrant API key
-- `QDRANT_COLLECTION_NAME`: Collection name (default: `fm_papers`)
+- `QDRANT_COLLECTION_NAME`: Collection name
+
+Note: Per-client configurations take precedence over legacy settings.
 
 ## Running the Service
 
