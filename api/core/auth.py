@@ -1,6 +1,7 @@
 """Authentication middleware for BoostHealth Service."""
 
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import FastAPI, Request, status
+from fastapi.responses import JSONResponse
 from starlette.middleware.base import BaseHTTPMiddleware
 
 from api.core.config import get_settings
@@ -22,16 +23,16 @@ class APIKeyMiddleware(BaseHTTPMiddleware):
         # Get API key from header
         auth_header = request.headers.get("Authorization")
         if not auth_header:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Missing Authorization header",
+                content={"detail": "Missing Authorization header"},
             )
         
         # Check if Bearer token format
         if not auth_header.startswith("Bearer "):
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid Authorization header format. Use 'Bearer <api_key>'",
+                content={"detail": "Invalid Authorization header format. Use 'Bearer <api_key>'"},
             )
         
         # Extract API key
@@ -44,9 +45,9 @@ class APIKeyMiddleware(BaseHTTPMiddleware):
             return await call_next(request)
         
         if api_key not in valid_keys:
-            raise HTTPException(
+            return JSONResponse(
                 status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid API key",
+                content={"detail": "Invalid API key"},
             )
         
         # Continue processing request
