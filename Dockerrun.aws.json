@@ -1,0 +1,15 @@
+{
+  "AWSEBDockerrunVersion": "1",
+  "Image": {
+    "Name": "588738586830.dkr.ecr.us-east-1.amazonaws.com/bh-service:latest",
+    "Update": "true"
+  },
+  "Ports": [
+    {
+      "ContainerPort": 8001,
+      "HostPort": 8001
+    }
+  ],
+  "Logging": "/var/log/bh-service"
+}
+

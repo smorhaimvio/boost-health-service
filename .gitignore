@@ -52,3 +52,8 @@ htmlcov/
 # Models cache
 .cache/
 models/
+
+# Elastic Beanstalk Files
+.elasticbeanstalk/*
+!.elasticbeanstalk/*.cfg.yml
+!.elasticbeanstalk/*.global.yml
